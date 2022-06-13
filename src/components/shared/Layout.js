@@ -15,7 +15,7 @@ function Layout({ children }) {
         />
       </Helmet>
       <Header />
-      <div className="layout-1">{children}</div>
+      <div className="content-container">{children}</div>
     </div>
   );
 }
