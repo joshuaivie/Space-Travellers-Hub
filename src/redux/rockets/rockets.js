@@ -4,7 +4,7 @@ const ROCKETS_ENPOINT = 'https://api.spacexdata.com/v3/rockets';
 // Action Types
 const FETCH_ROCKETS_BEGIN = '/rockets/FETCH_ROCKETS_BEGIN';
 const FETCH_ROCKETS_SUCCESS = '/rockets/FETCH_ROCKETS_SUCCESS';
-const FETCH_ROCKETS_ERROR = '/rockets/FETCH_ROCKETS_ERROR';
+const ROCKETS_ERROR = '/rockets/ROCKETS_ERROR';
 // const RESERVE_ROCKET = '/rockets/RESERVE_ROCKET';
 // const CANCEL_RESERVATIOIN = '/rockets/CANCEL_RESERVATIOIN';
 
@@ -24,11 +24,25 @@ const rocketsReducer = (state = initialState, action = {}) => {
         loading: true,
         error: null,
       };
+    case FETCH_ROCKETS_SUCCESS:
+      return {
+        ...state,
+        books: action.payload,
+        loading: false,
+        error: null,
+      };
+    case ROCKETS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+      };
     default:
       return state;
   }
 };
 
+// Action Creators
 const fetchRocketsBegin = () => ({
   type: FETCH_ROCKETS_BEGIN,
 });
@@ -38,13 +52,13 @@ const fetchRocketsSuccess = (rockets) => ({
   payload: rockets,
 });
 
-const fetchRocketsError = (errorMessage) => ({
-  type: FETCH_ROCKETS_ERROR,
+const rocketsError = (errorMessage) => ({
+  type: ROCKETS_ERROR,
   payload: errorMessage,
 });
 
 // Side Effects
-export const fetchBooks = () => async (dispatch) => {
+export const fetchRockets = () => async (dispatch) => {
   dispatch(fetchRocketsBegin());
   try {
     const response = await fetch(ROCKETS_ENPOINT);
@@ -62,7 +76,7 @@ export const fetchBooks = () => async (dispatch) => {
     dispatch(fetchRocketsSuccess(rockets));
     return json.books;
   } catch (error) {
-    return dispatch(fetchRocketsError(error));
+    return dispatch(rocketsError(error));
   }
 };
 
