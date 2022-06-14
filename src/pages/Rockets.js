@@ -13,16 +13,17 @@ function Rockets() {
 
   const { rockets, loading, error } = rocketsState;
 
-  useEffect(() => console.log(), [rocketsState]);
+  useEffect(() => console.log(rocketsState), [rocketsState]);
 
   return (
     <>
-      {error ? (<div>{error}</div>) : ''}
-      {loading ? '' : (
-        <section className="booklist flex">
-          <RocketList rockets={rockets} />
-        </section>
-      )}
+      {!loading
+        && (error ? (<div>{error}</div>)
+          : (
+            <section className="booklist flex">
+              <RocketList rockets={rockets} />
+            </section>
+          ))}
     </>
   );
 }

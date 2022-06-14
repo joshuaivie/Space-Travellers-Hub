@@ -35,7 +35,7 @@ const rocketsReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: false,
-        error: true,
+        error: action.payload,
       };
     default:
       return state;
@@ -52,9 +52,9 @@ const fetchRocketsSuccess = (rockets) => ({
   payload: rockets,
 });
 
-const rocketsError = (errorMessage) => ({
+const rocketsError = (error) => ({
   type: ROCKETS_ERROR,
-  payload: errorMessage,
+  payload: error.message,
 });
 
 // Side Effects
@@ -66,7 +66,7 @@ export const fetchRockets = () => async (dispatch) => {
       throw Error(response.statusText);
     }
     const json = await response.json();
-    const rockets = json?.data.map((rocket) => ({
+    const rockets = json?.map((rocket) => ({
       id: rocket?.id,
       rocket_name: rocket?.rocket_name,
       description: rocket?.description,
