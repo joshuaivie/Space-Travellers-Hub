@@ -1,44 +1,51 @@
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connectMission, discardMission } from '../redux/missions/missions';
 
-import './MissionsList.styles.scss';
-import { fetchMissions } from '../../redux/missions/missions';
-import Mission from '../Mission/Mission';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-const MissionsList = () => {
+const MissionContainer = (props) => {
+  const {
+    id,
+    name,
+    description,
+    join,
+  } = props;
   const dispatch = useDispatch();
-  const missions = useSelector((state) => state.missions);
 
-  useEffect(() => {
-    if (!missions.length) {
-      dispatch(getMissions());
+  const onClickEventHandler = () => {
+    if (join) {
+      dispatch(discardMission(id));
+    } else {
+      dispatch(connectMission(id));
     }
-  }, [dispatch]);
+  };
 
   return (
-    <div className="missions-list">
-      <table>
-        <thead>
-          <tr>
-            <th>Mission</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {missions.map((mission) => (
-            <Mission
-              key={mission.mission_id}
-              id={mission.mission_id}
-              name={mission.mission_name}
-              description={mission.description}
-              join={mission.join}
-            />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <tr className="mission-container">
+      <td className="name-field">{name}</td>
+      <td className="description-field">{description}</td>
+      <td className="status-field">
+        <p className={join ? 'active' : ''}>
+          {join ? 'Active Member' : 'NOT A MEMBER'}
+        </p>
+      </td>
+      <td className="action-container">
+        <button
+          type="button"
+          className={join ? 'btn active' : 'btn'}
+          onClick={onClickEventHandler}
+        >
+          {join ? 'Leave Mission' : 'Join   Mission'}
+        </button>
+      </td>
+    </tr>
   );
 };
 
-export default MissionsList;
+export default MissionContainer;
+
+MissionContainer.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  join: PropTypes.bool.isRequired,
+};

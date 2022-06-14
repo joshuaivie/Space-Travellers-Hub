@@ -1,10 +1,9 @@
 // Reducers
-import { fetchMissions } from './missions-api';
+import { getMissions } from './missionsApi';
 
-const DISCAR_MISSION = 'DISCAR_MISSION';
+const DISCARD_MISSION = 'DISCARD_MISSION';
 const CONNECT_MISSION = 'CONNECT_MISSION';
 const FETCH_MISSIONS = 'FETCH_MISSIONS';
-
 
 const initialState = [];
 
@@ -22,7 +21,7 @@ export default function reducer(state = initialState, action) {
         }
         return mission;
       });
-    case DISCAR_MISSION:
+    case DISCARD_MISSION:
       return state.map((mission) => {
         if (mission.mission_id === action.payload.id) {
           return { ...mission, join: false };
@@ -35,18 +34,16 @@ export default function reducer(state = initialState, action) {
 }
 
 export const fetchMissions = () => async (dispatch) => {
-  const missions = await fetchMissions();
+  const missions = await getMissions();
   dispatch({ type: FETCH_MISSIONS, payload: missions });
 };
 
 export const discardMission = (id) => ({
-    type: DISCAR_MISSION,
-    payload: { id },
-  });
-  
+  type: DISCARD_MISSION,
+  payload: { id },
+});
 
 export const connectMission = (id) => ({
   type: CONNECT_MISSION,
   payload: { id },
 });
-
