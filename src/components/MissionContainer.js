@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import '../styles/missioncontainer.css';
 import PropTypes from 'prop-types';
 import { connectMission, discardMission } from '../redux/missions/missions';
 
