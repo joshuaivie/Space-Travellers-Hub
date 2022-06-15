@@ -14,7 +14,6 @@ function Rockets() {
   const { rockets, loading, error } = rocketsState;
 
   useEffect(() => {
-    console.log(rocketsState);
   }, [rocketsState]);
   return (
     <>
