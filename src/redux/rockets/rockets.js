@@ -5,41 +5,14 @@ const ROCKETS_ENPOINT = 'https://api.spacexdata.com/v3/rockets';
 const FETCH_ROCKETS_BEGIN = '/rockets/FETCH_ROCKETS_BEGIN';
 const FETCH_ROCKETS_SUCCESS = '/rockets/FETCH_ROCKETS_SUCCESS';
 const ROCKETS_ERROR = '/rockets/ROCKETS_ERROR';
-// const RESERVE_ROCKET = '/rockets/RESERVE_ROCKET';
-// const CANCEL_RESERVATIOIN = '/rockets/CANCEL_RESERVATIOIN';
+const RESERVE_ROCKET = '/rockets/RESERVE_ROCKET';
+const CANCEL_RESERVATIOIN = '/rockets/CANCEL_RESERVATIOIN';
 
 // Initial State
 const initialState = {
   rockets: [],
   loading: true,
   error: null,
-};
-
-// Reducers
-const rocketsReducer = (state = initialState, action = {}) => {
-  switch (action.type) {
-    case FETCH_ROCKETS_BEGIN:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    case FETCH_ROCKETS_SUCCESS:
-      return {
-        ...state,
-        books: action.payload,
-        loading: false,
-        error: null,
-      };
-    case ROCKETS_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    default:
-      return state;
-  }
 };
 
 // Action Creators
@@ -55,6 +28,16 @@ const fetchRocketsSuccess = (rockets) => ({
 const rocketsError = (error) => ({
   type: ROCKETS_ERROR,
   payload: error.message,
+});
+
+export const reserveRocket = (id) => ({
+  type: RESERVE_ROCKET,
+  payload: id,
+});
+
+export const cancelReservation = (id) => ({
+  type: CANCEL_RESERVATIOIN,
+  payload: id,
 });
 
 // Side Effects
@@ -74,9 +57,56 @@ export const fetchRockets = () => async (dispatch) => {
       reserved: false,
     }));
     dispatch(fetchRocketsSuccess(rockets));
-    return json.books;
+    return json.rockets;
   } catch (error) {
     return dispatch(rocketsError(error));
+  }
+};
+
+const reserveRocketAction = (rockets, id) => rockets.map((rocket) => {
+  if (rocket.id !== id) return rocket;
+  return { ...rocket, reserved: true };
+});
+
+const cancelRocketReservtionAction = (rockets, id) => rockets.map((rocket) => {
+  if (rocket.id !== id) return rocket;
+  return { ...rocket, reserved: false };
+});
+
+// Reducers
+const rocketsReducer = (state = initialState, action = {}) => {
+  switch (action.type) {
+    case FETCH_ROCKETS_BEGIN:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FETCH_ROCKETS_SUCCESS:
+      return {
+        ...state,
+        rockets: action.payload,
+        loading: false,
+        error: null,
+      };
+    case RESERVE_ROCKET:
+      return {
+        ...state,
+        rockets: reserveRocketAction(state.rockets, action.payload),
+      };
+    case CANCEL_RESERVATIOIN:
+      return {
+        ...state,
+        rockets: cancelRocketReservtionAction(state.rockets, action.payload),
+      };
+    case ROCKETS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
   }
 };
 

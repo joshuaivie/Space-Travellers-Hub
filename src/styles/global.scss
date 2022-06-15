@@ -14,10 +14,13 @@ body {
   font-family: "Roboto", sans-serif;
   width: 80%;
   margin: auto;
+  color: #666;
 }
 
 .content-container {
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.5rem 5rem;
+  display: block;
 }
 
 @import url(./header.scss);
+@import url(./rockets.scss);
