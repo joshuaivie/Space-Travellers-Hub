@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page renders correctly Renders the rockets page 1`] = `
+<ul
+  className="rocket-list"
+/>
+`;
