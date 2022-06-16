@@ -4,17 +4,19 @@ import { fetchRockets } from '../redux/rockets/rockets';
 import RocketList from '../components/RocketList';
 
 function Rockets() {
-  const rocketsState = useSelector((state) => state.rockets);
   const dispatch = useDispatch();
+  const rocketsState = useSelector((state) => state.rockets);
 
   useEffect(() => {
-    dispatch(fetchRockets());
-  }, []);
+    if (!rocketsState.rockets.length) {
+      dispatch(fetchRockets());
+    }
+  }, [dispatch]);
 
   const { rockets } = rocketsState;
 
-  useEffect(() => {
-  }, [rocketsState]);
+  /* useEffect(() => {
+  }, [rocketsState]); */
   return (
     <>
       <RocketList rockets={rockets} />
