@@ -5,28 +5,36 @@ const MemberList = () => {
   const rockets = useSelector((state) => state.rockets);
 
   const activeMissions = missions.filter((mission) => mission.join);
-  const activeRockets = rockets?.filter((rocket) => rocket.reserve) || [];
+  const activeRockets = rockets?.rockets.filter((rocket) => rocket.reserved);
 
   return (
-    <div className="member">
+    <div className="member-container">
       <div className="missions-container">
-        <h1>My Missions</h1>
-        <ul>
-          {activeMissions.map((mission) => (
+        <h2>My Missions</h2>
+        <ul className="member-list">
+          {activeMissions.length > 0 ? activeMissions.map((mission) => (
             <li key={mission.mission_id}>
-              <h2>{mission.mission_name}</h2>
+              <p>{mission.mission_name}</p>
             </li>
-          ))}
+          )) : (
+            <li>
+              <p>No active missions</p>
+            </li>
+          )}
         </ul>
       </div>
       <div className="rockets-container">
-        <h1>My Rockets</h1>
-        <ul>
-          {activeRockets.map((rocket) => (
+        <h2>My Rockets</h2>
+        <ul className="member-list">
+          {activeRockets.length > 0 ? activeRockets.map((rocket) => (
             <li key={rocket.id}>
-              <h2>{rocket.rocket_name}</h2>
+              <p>{rocket.rocket_name}</p>
             </li>
-          ))}
+          )) : (
+            <li>
+              <p>No rockets reserved</p>
+            </li>
+          )}
         </ul>
       </div>
     </div>
