@@ -11,17 +11,13 @@ function Rockets() {
     dispatch(fetchRockets());
   }, []);
 
-  const { rockets, loading, error } = rocketsState;
+  const { rockets } = rocketsState;
 
   useEffect(() => {
   }, [rocketsState]);
   return (
     <>
-      {!loading
-        && (error ? (<div>{error}</div>)
-          : (
-            <RocketList rockets={rockets} />
-          ))}
+      <RocketList rockets={rockets} />
     </>
   );
 }
