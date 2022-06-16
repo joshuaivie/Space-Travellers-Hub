@@ -5,7 +5,7 @@ const MemberList = () => {
   const rockets = useSelector((state) => state.rockets);
 
   const activeMissions = missions.filter((mission) => mission.join);
-    const activeRockets = rockets.filter((rocket) => rocket.reserve);
+  const activeRockets = rockets.filter((rocket) => rocket.reserve);
 
   return (
     <div className="member">
