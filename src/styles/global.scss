@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #f5f6fa;
+  background-color: #fff;
   line-height: 1;
   font-family: "Roboto", sans-serif;
   width: 80%;
@@ -24,3 +24,5 @@ body {
 
 @import url(./header.scss);
 @import url(./rockets.scss);
+@import url(./profile.scss);
+@import url(./mission.scss);
