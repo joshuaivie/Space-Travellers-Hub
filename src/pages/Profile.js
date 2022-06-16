@@ -1,9 +1,9 @@
-import React from 'react';
+import MemberList from '../components/MerberList';
 
-function Profile() {
-  return (
-    <div>Profile</div>
-  );
-}
+const Profile = () => (
+  <div className="profile-container">
+    <MemberList />
+  </div>
+);
 
 export default Profile;
