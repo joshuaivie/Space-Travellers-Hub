@@ -1,4 +1,4 @@
-import reducer from './missions';
+import reducer from '../redux/missions/missions';
 
 it('return the initial state', () => {
   expect(reducer(undefined, {})).toEqual([]);

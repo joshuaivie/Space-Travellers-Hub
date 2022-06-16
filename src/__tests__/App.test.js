@@ -2,8 +2,8 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import React from 'react';
-import Missions from './pages/Missions';
-import store from './redux/configureStore';
+import Missions from '../pages/Missions';
+import store from '../redux/configureStore';
 
 describe('Pages renders correctly', () => {
   it('Missions page renders correctly', () => {
